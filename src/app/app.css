@@ -1,0 +1,13 @@
+:host {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopping-container {
+  width: 665px;
+  border: 1px solid #4472c4;
+  padding: 45px 70px;
+  box-sizing: border-box;
+}
