@@ -1,18 +1,30 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-@Component({
-  selector: 'app-shopping-list',
-  imports: [],
-  templateUrl: './shopping-list.html',
-  styleUrl: './shopping-list.css'
-})
-export class ShoppingList {
+import { ShoppingList } from './shopping-list';
 
-  @Input() items: string[] = [];
+describe('ShoppingList', () => {
+  let component: ShoppingList;
+  let fixture: ComponentFixture<ShoppingList>;
 
-  @Output() itemDeleted = new EventEmitter<number>();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ShoppingList],
+    }).compileComponents();
 
-  deleteItem(index: number): void {
-    this.itemDeleted.emit(index);
-  }
-}
+    fixture = TestBed.createComponent(ShoppingList);
+    component = fixture.componentInstance;
+    component.items = ['5 pommes', '12 oeufs'];
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should emit the index when deleting an item', () => {
+    let emitted: number | undefined;
+    component.itemDeleted.subscribe((i: number) => (emitted = i));
+    component.deleteItem(1);
+    expect(emitted).toBe(1);
+  });
+});
